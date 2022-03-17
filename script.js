@@ -1,7 +1,7 @@
 const time = document.querySelector("#time"),
   greeting = document.querySelector("#good"),
   name = document.querySelector("#name"),
-  plans = document.querySelector("#plans");
+  focus = document.querySelector("#plans");
 
 const showAmPm = true;
 
@@ -60,8 +60,34 @@ const getName = () => {
   }
 };
 
+const setFocus = (e) => {
+  if (e.type === "keypress") {
+    if (e.key === "Enter") {
+      localStorage.setItem("focus", e.target.innerHTML);
+      getFocus();
+      focus.blur();
+    } else {
+      localStorage.setItem("focus", e.target.innerHTML);
+    }
+  }
+};
+
+const getFocus = () => {
+  if (
+    localStorage.getItem("focus") === null ||
+    localStorage.getItem("focus").length === 0
+  ) {
+    focus.textContent = "[Enter focus]";
+  } else {
+    focus.textContent = localStorage.getItem("focus");
+  }
+  
+};
+
+focus.addEventListener("keypress", setFocus);
 name.addEventListener("keypress", setName);
 
 showTime();
 setBg();
 getName();
+getFocus();
